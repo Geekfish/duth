@@ -1,9 +1,12 @@
+from __future__ import absolute_import
 import pprint
 import struct
 import binascii
 
 import requests
 from xtermcolor import colorize
+
+from .morse import encode
 
 
 LED_RANGE = range(0, 60)
@@ -34,3 +37,16 @@ def update_led(led_index, colour, dry_run=False):
         'http://gears.djangounderthehood.com/set-led-colour/',
         data=data)
     print_colorized(resp, rgb)
+
+
+def morse_led(message, dry_run=False):
+    assert len(message) <= LED_RANGE[-1]
+    colour_map = {
+        '.': "1FE0E0",
+        '-': "1F4CE0",
+        ' ': "000000",
+    }
+
+    morse_msg = encode(message)
+    for led_index, char in enumerate(morse_msg):
+        update_led(led_index, colour_map[char], dry_run)
