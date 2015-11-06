@@ -37,7 +37,6 @@ testCode = ".... . .-.. .-.. --- / -.. .- .. .-.. -.-- / .--. .-. --- --. .-. .-
            ".- -.-- "
 
 
-# parse a morse code string positionInString is the starting point for decoding
 def decode(code, position=0):
     if position < len(code):
         morse_letter = ""
@@ -53,10 +52,5 @@ def decode(code, position=0):
         return ""
 
 
-# encode a message in morse code, spaces between words are represented by '/'
-def encode(message):
-    message = ""
-    for char in message[:]:
-        message += morse_ab[char.upper()] + " "
-
-    return message
+def encode(text_message):
+    return "".join([morse_ab[char.upper()] + " " for char in text_message])
